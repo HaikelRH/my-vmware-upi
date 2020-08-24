@@ -1,0 +1,29 @@
+apiVersion: ocs.openshift.io/v1
+kind: StorageCluster
+metadata:
+  namespace: openshift-storage
+  name: storagecluster
+spec:
+  manageNodes: false
+  monPVCTemplate:
+    spec:
+      storageClassName: thin
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 5Gi
+  storageDeviceSets:
+  - name: ocs-deviceset
+    count: 3
+    placement: {}
+    dataPVCTemplate:
+      spec:
+        storageClassName: localstorage-ocs-osd-sc
+        accessModes:
+        - ReadWriteOnce
+        volumeMode: Block
+        resources:
+          requests:
+            storage: 800Gi
+    portable: false

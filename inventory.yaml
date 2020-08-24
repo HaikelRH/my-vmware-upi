@@ -1,0 +1,125 @@
+---
+all:
+  vars:
+    provision_group: pg
+    ova_path: /tmp/rhcos-vmware.x86_64.ova
+    ova_vm_name: rhcos-4.5.2-x86_64-vmware.x86_64
+    cluster_name: ocp4
+    base_domain: ocp4.example.com
+    dhcp_server_dns_servers: 192.168.1.110
+    dhcp_server_gateway: 192.168.1.1
+    dhcp_server_subnet_mask: 255.255.255.0
+    dhcp_server_subnet: 192.168.1.0
+    installation_directory: ~/upi/vmware-upi
+  children:
+    helper:
+      hosts:
+        utility1.ocp4.example.com:
+          ip: 192.168.1.113
+          httpd_port: 8080
+    pg:
+      hosts:
+        bootstrap:
+          ip: 192.168.1.51
+          memory: 16576
+          cores: 2
+          datastore: datastore1
+        master0:
+          etcd_name: etcd-0
+          ip: 192.168.1.52
+          memory: 16576
+          cores: 4
+          datastore: datastore1
+        master1:
+          etcd_name: etcd-1
+          ip: 192.168.1.53
+          memory: 16576
+          cores: 4
+          datastore: datastore1
+        master2:
+          etcd_name: etcd-2
+          ip: 192.168.1.54
+          memory: 16576
+          cores: 4
+          datastore:  datastore1
+        worker0:
+          ip: 192.168.1.55
+          memory: 8576
+          cores: 2
+          datastore: datastore1
+        worker1:
+          ip: 192.168.1.56
+          memory: 8576
+          cores: 2
+          datastore: datastore1
+        worker2:
+          ip: 192.168.1.57
+          memory: 8576
+          cores: 2
+          datastore: datastore1
+#        ocs-node0:
+#          ip: 192.168.1.59
+#          memory: 8152
+#          cores: 2
+#          datastore: datastore1
+#          hypervisor: 192.168.1.153
+#          disks:
+#          - size_gb: 100
+#            type: thin
+#            datastore: datastore1
+#            scsi_controller: 0
+#            unit_number: 1
+#          - size_gb: 5
+#            type: thin
+#            datastore: datastore1
+#            scsi_controller: 0
+#            unit_number: 2
+#        ocs-node1:
+#          ip: 172.16.10.139
+#          memory: 49152
+#          cores: 10
+#          datastore: pool-nvme-vms
+#          hypervisor: r420-esxi-2.pwc.umbrella.local
+#          disks:
+#          - size_gb: 800
+#            type: thin
+#            datastore: r420-esxi-2-nvme
+#            scsi_controller: 0
+#            unit_number: 1
+#          - size_gb: 5
+#            type: thin
+#            datastore: r420-esxi-2-nvme
+#            scsi_controller: 0
+#            unit_number: 2
+#        ocs-node2:
+#          ip: 172.16.10.140
+#          memory: 49152
+#          cores: 10
+#          datastore: pool-nvme-vms
+#          hypervisor: r710-esxi-1.pwc.umbrella.local
+#          disks:
+#          - size_gb: 800
+#            type: thin
+#            datastore: r710-esxi-1-nvme
+#            scsi_controller: 0
+#            unit_number: 1
+#          - size_gb: 5
+#            type: thin
+#            datastore: r710-esxi-1-nvme
+#            scsi_controller: 0
+#            unit_number: 2
+#        infra-node0:
+#          ip: 172.16.10.141
+#          memory: 49152
+#          cores: 10
+#          datastore: pool-nvme-vms
+#        infra-node1:
+#          ip: 172.16.10.142
+#          memory: 49152
+#          cores: 10
+#          datastore: pool-nvme-vms
+#        infra-node2:
+#          ip: 172.16.10.143
+#          memory: 49152
+#          cores: 10
+#          datastore: pool-nvme-vms

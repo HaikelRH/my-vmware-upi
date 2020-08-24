@@ -1,0 +1,38 @@
+---
+- name: Setup DNS and Create RHCOS VMs on VMware
+  hosts: localhost
+  vars_files:
+    - vault.yaml
+  roles:
+    - role: ipa
+      tags:
+        - ipa
+    - role: vmware
+      tags:
+        - vmware
+
+- name: Setup Load Balancer Host
+  hosts: helper
+  become: yes
+  roles:
+    - role: dhcpd
+      tags:
+        - dhcpd
+    - role: firewalld
+      tags:
+        - firewalld
+    - role: haproxy
+      tags:
+        - haproxy
+    - role: httpd
+      tags:
+        - httpd
+
+- name: Boot Red Hat CoreOS Nodes
+  hosts: localhost
+  vars_files:
+    - vault.yaml
+  roles:
+   - role: boot-instances
+     tags:
+        - boot-instances 
